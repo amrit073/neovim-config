@@ -19,7 +19,13 @@ require('packer').startup(function(use)
       'williamboman/mason-lspconfig.nvim',
     },
   }
-
+  use { "mfussenegger/nvim-dap" , config=function ()
+    require('dap').setup()
+  end}
+  use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+  use { 'ggandor/lightspeed.nvim', config = function()
+    require('lightspeed').setup()
+  end }
   use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
 
   use { -- Autocompletion
@@ -36,11 +42,22 @@ require('packer').startup(function(use)
       pcall(require('vim-treesitter.install').update { with_sync = true })
     end,
   }
-
+  use({
+    "cuducos/yaml.nvim",
+    ft = { "yaml" },
+    requires = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("config.yaml")
+    end,
+  })
   use { -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
   }
+
   use { 'windwp/nvim-autopairs' }
   -- Git related plugins
   use 'tpope/vim-fugitive'
@@ -171,7 +188,7 @@ require('Comment').setup()
 -- See `:help indent_blankline.txt`
 require('indent_blankline').setup {
   char = '┊',
-  show_trailing_blankline_indent = false,
+  show_trailing_blankline_indent = true,
 }
 require('nvim-autopairs').setup()
 -- Gitsigns
@@ -198,7 +215,6 @@ require('telescope').setup {
     },
   },
 }
-
 require("nvim-tree").setup({
   view = {
     side = "right"
@@ -212,7 +228,7 @@ require("nvim-tree").setup({
     root_folder_label = ":~:s?$?/..?",
     indent_width = 2,
     indent_markers = {
-      enable = false,
+      enable = true,
       inline_arrows = true,
       icons = {
         corner = "└",
@@ -291,6 +307,7 @@ require("bufferline").setup {
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
+pcall(require('telescope').load_extension, 'dap')
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
@@ -314,7 +331,6 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'typescript', 'help' },
-
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
@@ -438,9 +454,6 @@ local servers = {
 
 }
 
--- Setup neovim lua configuration
-require('neodev').setup()
---
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -522,3 +535,4 @@ cmp.setup.cmdline(':', {
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 vim.cmd('source $HOME/.config/nvim/term.vim')
+require('debugger/all-dap')
