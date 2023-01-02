@@ -17,6 +17,9 @@ require('packer').startup(function(use)
       -- Automatically install LSPs to stdpath for neovim
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
+
+      -- Additional lua configuration, makes nvim stuff amazing
+      'folke/neodev.nvim',
     },
   }
   use { "mfussenegger/nvim-dap" , config=function ()
@@ -61,6 +64,7 @@ require('packer').startup(function(use)
   use { 'windwp/nvim-autopairs' }
   -- Git related plugins
   use 'tpope/vim-fugitive'
+  use 'tpope/vim-rhubarb'
   use 'lewis6991/gitsigns.nvim'
 
   use 'navarasu/onedark.nvim' -- Theme inspired by Atom
