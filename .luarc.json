@@ -1,5 +1,8 @@
 {
     "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "Lua.diagnostics.globals": [
+        "vim"
+    ],
     "Lua.workspace.library": [
         "/home/amrit/.local/share/nvim/site/pack/packer/start/neodev.nvim/types/stable",
         "/usr/share/nvim/runtime",

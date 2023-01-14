@@ -31,9 +31,12 @@ nnoremap <leader>t :call TermToggle(8)<CR>
 tnoremap <Esc> <C-\><C-n><C-w>w
 nnoremap <leader>v :NvimTreeToggle<CR> 
 nnoremap <leader>b <C-\><C-n><C-w>w<cr>
+nnoremap <leader>n :lua vim.diagnostic.goto_next()<CR>
 nnoremap <C-l> :bn<cr>
 nnoremap <C-h> :bp<cr>
 set relativenumber
+set scrolloff=6
+tnoremap p i<Up>
 nnoremap \\ :noh<cr>
 
 nnoremap <A-j> :m .+1<CR>==
@@ -44,8 +47,7 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 nnoremap <tab> :lua vim.lsp.buf.hover()<cr>
-autocmd BufWritePre *.js,*.ts Format
-autocmd BufWritePre *.cpp,*.c Format
+autocmd BufWritePre *.js,*.ts,*.c,*.cpp,*.rs Format
 function! CleanEmptyBuffers()
     let buffers = filter(range(1, bufnr('$')), 'buflisted(v:val) && empty(bufname(v:val)) && bufwinnr(v:val)<0 && !getbufvar(v:val, "&mod")')
     if !empty(buffers)
