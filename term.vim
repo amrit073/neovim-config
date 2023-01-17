@@ -36,7 +36,7 @@ nnoremap <C-l> :bn<cr>
 nnoremap <C-h> :bp<cr>
 set relativenumber
 set scrolloff=6
-tnoremap p i<Up>
+" tnoremap p i<Up>
 nnoremap \\ :noh<cr>
 
 nnoremap <A-j> :m .+1<CR>==
@@ -47,10 +47,18 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
 nnoremap <tab> :lua vim.lsp.buf.hover()<cr>
-autocmd BufWritePre *.js,*.ts,*.c,*.cpp,*.rs Format
+autocmd BufWritePre *.js,*.ts,*.c,*.cpp,*.rs,*lua Format
 function! CleanEmptyBuffers()
     let buffers = filter(range(1, bufnr('$')), 'buflisted(v:val) && empty(bufname(v:val)) && bufwinnr(v:val)<0 && !getbufvar(v:val, "&mod")')
     if !empty(buffers)
         exe 'bw ' . join(buffers, ' ')
     endif
 endfunction
+
+
+call plug#begin()
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'mxsdev/nvim-dap-vscode-js'
+Plug 'kkoomen/vim-doge'
+call plug#end()

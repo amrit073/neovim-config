@@ -10,7 +10,7 @@ end
 require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
-
+  -- use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
   use { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     requires = {
@@ -19,7 +19,20 @@ require('packer').startup(function(use)
       'williamboman/mason-lspconfig.nvim',
     },
   }
-
+  use { 'anuvyklack/pretty-fold.nvim',
+    config = function()
+      require('pretty-fold').setup()
+    end
+  }
+  use {
+    "danymat/neogen",
+    config = function()
+      require('neogen').setup { { snippet_engine = "luasnip" } }
+    end,
+    requires = "nvim-treesitter/nvim-treesitter",
+    -- Uncomment next line if you want to follow only stable versions
+    -- tag = "*"
+  }
   use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
 
   use { -- Autocompletion
@@ -142,6 +155,9 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+-- Fold using tresitter
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
@@ -319,11 +335,17 @@ require('nvim-treesitter.configs').setup {
   indent = { enable = true, disable = { 'python' } },
   incremental_selection = {
     enable = true,
+    -- keymaps = {
+    --   init_selection = '<c-space>',
+    --   node_incremental = '<c-space>',
+    --   scope_incremental = '<c-s>',
+    --   node_decremental = '<c-backspace>',
+    -- },
     keymaps = {
-      init_selection = '<c-space>',
-      node_incremental = '<c-space>',
-      scope_incremental = '<c-s>',
-      node_decremental = '<c-backspace>',
+      init_selection = "<CR>",
+      node_incremental = "<CR>",
+      scope_incremental = "<S-CR>",
+      node_decremental = "<BS>",
     },
   },
   textobjects = {
@@ -511,15 +533,13 @@ cmp.setup {
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
     { name = 'cmdline' }
   })
 })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 vim.cmd('source $HOME/.config/nvim/term.vim')
-
+vim.cmd('source $HOME/.config/nvim/dappy.lua')
 
 
 
