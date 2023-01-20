@@ -29,16 +29,6 @@ end
 for _, language in ipairs({ 'typescript', 'javascript' }) do
     dap.configurations[language] = {
         {
-            name = "Example",
-            type = "pwa-node",
-            request = "launch",
-            runtimeArgs = { "--nolazy", "-r", "ts-node/register/transpile-only" },
-            args = { "src/index.ts" },
-            cwd = '${workspaceRoot}',
-            internalConsoleOptions = 'openOnSessionStart',
-            skipFiles = { "<node_internals>/**", "node_modules/**" }
-        },
-        {
             name = 'Launch',
             type = 'pwa-node',
             request = 'launch',
@@ -60,52 +50,7 @@ for _, language in ipairs({ 'typescript', 'javascript' }) do
             request = 'attach',
             rootPath = '${workspaceFolder}',
             processId = require('dap.utils').pick_process,
-        },
-        {
-            name = 'Debug Main Process (Electron)',
-            type = 'pwa-node',
-            request = 'launch',
-            program = '${workspaceFolder}/node_modules/.bin/electron',
-            args = {
-                '${workspaceFolder}/dist/index.js',
-            },
-            outFiles = {
-                '${workspaceFolder}/dist/*.js',
-            },
-            resolveSourceMapLocations = {
-                '${workspaceFolder}/dist/**/*.js',
-                '${workspaceFolder}/dist/*.js',
-            },
-            rootPath = '${workspaceFolder}',
-            cwd = '${workspaceFolder}',
-            sourceMaps = true,
-            skipFiles = { '<node_internals>/**' },
-            protocol = 'inspector',
-            console = 'integratedTerminal',
-        },
-        {
-            name = 'Compile & Debug Main Process (Electron)',
-            type = custom_adapter,
-            request = 'launch',
-            preLaunchTask = 'npm run build-ts',
-            program = '${workspaceFolder}/node_modules/.bin/electron',
-            args = {
-                '${workspaceFolder}/dist/index.js',
-            },
-            outFiles = {
-                '${workspaceFolder}/dist/*.js',
-            },
-            resolveSourceMapLocations = {
-                '${workspaceFolder}/dist/**/*.js',
-                '${workspaceFolder}/dist/*.js',
-            },
-            rootPath = '${workspaceFolder}',
-            cwd = '${workspaceFolder}',
-            sourceMaps = true,
-            skipFiles = { '<node_internals>/**' },
-            protocol = 'inspector',
-            console = 'integratedTerminal',
-        },
+        }
     }
 end
 
@@ -187,6 +132,10 @@ dapui.setup({
 
 vim.fn.sign_define("DapBreakpoint", { text = "⬤", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
 vim.fn.sign_define('DapStopped', { text = '⏭', texthl = 'DapStopped', linehl = 'DapStopped', numhl = 'DapStopped' })
+
+
+
+require("nvim-dap-virtual-text").setup()
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
     dapui.open()

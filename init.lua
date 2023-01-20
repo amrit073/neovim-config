@@ -19,11 +19,11 @@ require('packer').startup(function(use)
       'williamboman/mason-lspconfig.nvim',
     },
   }
-  use { 'anuvyklack/pretty-fold.nvim',
-    config = function()
-      require('pretty-fold').setup()
-    end
-  }
+  -- use { 'anuvyklack/pretty-fold.nvim',
+  --   config = function()
+  --     require('pretty-fold').setup()
+  --   end
+  -- }
   use {
     "danymat/neogen",
     config = function()
@@ -156,8 +156,8 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Fold using tresitter
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
@@ -445,6 +445,8 @@ local on_attach = function(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
+
+vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
