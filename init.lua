@@ -216,6 +216,9 @@ require('telescope').setup {
 }
 
 require("nvim-tree").setup({
+  diagnostics = {
+    enable = true,
+  },
   view = {
     side = "right"
   },
@@ -446,7 +449,7 @@ local on_attach = function(_, bufnr)
 end
 
 
-vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+-- vim.cmd [[autocmd! CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]]
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
 --
