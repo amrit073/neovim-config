@@ -45,6 +45,7 @@ inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
+nnoremap <leader>d :Neogen <CR>
 
 nnoremap <tab> :lua vim.lsp.buf.hover()<cr>
 autocmd BufWritePre *.js,*.ts,*.c,*.cpp,*.rs,*lua Format
