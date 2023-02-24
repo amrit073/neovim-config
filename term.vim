@@ -47,6 +47,19 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 nnoremap <leader>d :Neogen <CR>
 
+
+
+
+" Bufferlines....
+nnoremap <leader>1 :BufferLineGoToBuffer 1<CR>
+nnoremap <leader>2 :BufferLineGoToBuffer 2<CR>
+nnoremap <leader>3 :BufferLineGoToBuffer 3<CR>
+nnoremap <leader>4 :BufferLineGoToBuffer 4<CR>
+nnoremap <leader>5 :BufferLineGoToBuffer 5<CR>
+nnoremap <leader>6 :BufferLineGoToBuffer 6<CR>
+nnoremap <leader>7 :BufferLineGoToBuffer 7<CR>
+nnoremap <leader>8 :BufferLineGoToBuffer 8<CR>
+
 nnoremap <tab> :lua vim.lsp.buf.hover()<cr>
 autocmd BufWritePre *.js,*.ts,*.c,*.cpp,*.rs,*lua Format
 function! CleanEmptyBuffers()
@@ -57,10 +70,12 @@ function! CleanEmptyBuffers()
 endfunction
 
 
+
 call plug#begin()
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'theHamsta/nvim-dap-virtual-text'
 Plug 'mxsdev/nvim-dap-vscode-js'
 Plug 'kkoomen/vim-doge'
+Plug 'gpanders/editorconfig.nvim'
 call plug#end()

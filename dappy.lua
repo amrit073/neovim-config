@@ -45,6 +45,22 @@ for _, language in ipairs({ 'typescript', 'javascript' }) do
             }
         },
         {
+            name = 'test',
+            type = 'node',
+            request = 'launch',
+            runtimeArgs = { " ['--exit', '--recursive' , '--require', 'ts-node/register']" },
+            program = '${workspaceFolder}/node_modules/mocha/bin/_mocha',
+            rootPath = '${workspaceFolder}',
+            args = "['--exit', '--recursive'  '--require' 'ts-node/register' '${workspaceFolder}/test/**/*.ts']",
+            sourceMaps = true,
+            skipFiles = { '<node_internals>/**' },
+            protocol = 'inspector',
+            console = 'integratedTerminal',
+            env = {
+                NODE_ENV = 'test'
+            }
+        },
+        {
             name = 'Attach to node process',
             type = 'pwa-node',
             request = 'attach',
