@@ -553,7 +553,9 @@ vim.cmd('source $HOME/.config/nvim/dappy.lua')
 
 
 
-
+vim.api.nvim_create_user_command('W', function(_)
+  vim.cmd('w')
+end, { desc = ':W = :w' })
 
 
 

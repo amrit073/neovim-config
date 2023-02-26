@@ -77,5 +77,5 @@ Plug 'rcarriga/nvim-dap-ui'
 Plug 'theHamsta/nvim-dap-virtual-text'
 Plug 'mxsdev/nvim-dap-vscode-js'
 Plug 'kkoomen/vim-doge'
-Plug 'gpanders/editorconfig.nvim'
+Plug 'editorconfig/editorconfig-vim'
 call plug#end()
