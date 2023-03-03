@@ -208,11 +208,17 @@ require('gitsigns').setup {
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
-    mappings = {
-      i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
-      },
+    borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
+    layout_strategy = "horizontal",
+    layout_config = {
+      height = 0.8,
+      width = 0.8,
+      prompt_position = "bottom",
+      preview_width = 0.5,
+    },
+    prompt_prefix = " ",
+    cache_picker = {
+      num_pickers = 20,
     },
   },
 }

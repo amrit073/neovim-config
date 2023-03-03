@@ -7,6 +7,10 @@ require('dap-vscode-js').setup({
 
 local dap = require('dap')
 
+
+
+
+
 -- custom adapter for running tasks before starting debug
 local custom_adapter = 'pwa-node-custom'
 dap.adapters[custom_adapter] = function(cb, config)
@@ -46,21 +50,16 @@ for _, language in ipairs({ 'typescript', 'javascript' }) do
         },
         {
             name = 'test',
-            type = 'node',
+            type = 'pwa-node',
+            cwd = vim.fn.getcwd(),
             request = 'launch',
-            runtimeArgs = { " ['--exit', '--recursive' , '--require', 'ts-node/register']" },
+            runtimeArgs = { "NODE_ENV=test", "${workspaceFolder}/node_modules/mocha/bin/_mocha", '-t', '10000', '--exit',
+                '--recursive', '--require',
+                'ts-node/register', 'test/controllers/owner.signup.test.ts' },
             program = '${workspaceFolder}/node_modules/mocha/bin/_mocha',
-            rootPath = '${workspaceFolder}',
-            args = "['--exit', '--recursive'  '--require' 'ts-node/register' '${workspaceFolder}/test/**/*.ts']",
             sourceMaps = true,
             skipFiles = { '<node_internals>/**' },
-            protocol = 'inspector',
-            console = 'integratedTerminal',
-            env = {
-                NODE_ENV = 'test'
-            }
-        },
-        {
+        }, {
             name = 'Attach to node process',
             type = 'pwa-node',
             request = 'attach',
@@ -98,20 +97,17 @@ dapui.setup({
         {
             elements = {
                 -- Elements can be strings or table with id and size keys.
-                { id = "scopes", size = 0.25 },
-                "breakpoints",
-                "stacks",
                 "console",
+                "repl"
             },
-            size = 40, -- 40 columns
-            position = "left",
+            size = 30, -- 30 columns
+            position = "right",
         },
         {
             elements = {
-                "repl",
                 "watches",
             },
-            size = 0.25, -- 25% of total lines
+            size = 0.20, -- 20% of total lines
             position = "bottom",
         },
     },
@@ -167,6 +163,7 @@ end
 
 
 vim.keymap.set('n', '<F10>', require 'dapui'.toggle)
+vim.keymap.set('n', '<F9>', require('dapui').eval)
 vim.keymap.set('n', '<F5>', require 'dap'.continue)
 vim.keymap.set('n', '<F6>', require 'dap'.step_over)
 vim.keymap.set('n', '<F4>', require 'dap'.step_into)
