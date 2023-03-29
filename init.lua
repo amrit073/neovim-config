@@ -61,11 +61,11 @@ require('packer').startup(function(use)
   use 'tpope/vim-fugitive'
   use 'lewis6991/gitsigns.nvim'
 
-  use 'navarasu/onedark.nvim' -- Theme inspired by Atom
-  use 'nvim-lualine/lualine.nvim' -- Fancier statusline
+  use 'navarasu/onedark.nvim'               -- Theme inspired by Atom
+  use 'nvim-lualine/lualine.nvim'           -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
-  use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
-  use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
+  use 'numToStr/Comment.nvim'               -- "gc" to comment visual regions/lines
+  use 'tpope/vim-sleuth'                    -- Detect tabstop and shiftwidth automatically
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -76,6 +76,9 @@ require('packer').startup(function(use)
   use { 'nvim-tree/nvim-tree.lua', requires = {
     'nvim-tree/nvim-web-devicons', -- optional, for file icons
   }, tag = 'nightly' }
+
+  use 'karb94/neoscroll.nvim'
+
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -113,7 +116,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 -- See `:help vim.o`
 
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 
 -- Make line numbers default
 vim.wo.number = true
@@ -171,6 +174,21 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+
+require('neoscroll').setup({
+  -- All these keys will be mapped to their corresponding default scrolling animation
+  mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>',
+    '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
+  hide_cursor = true,          -- Hide cursor while scrolling
+  stop_eof = true,             -- Stop at <EOF> when scrolling downwards
+  respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+  cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+  easing_function = nil,       -- Default easing function
+  pre_hook = nil,              -- Function to run before the scrolling animation starts
+  post_hook = nil,             -- Function to run after the scrolling animation ends
+  performance_mode = false,    -- Disable "Performance Mode" on all buffers.
+})
+
 -- Set lualine as statusline
 -- See `:help lualine.txt`
 require('lualine').setup {
@@ -201,6 +219,12 @@ require('gitsigns').setup {
     delete = { text = '_' },
     topdelete = { text = '‾' },
     changedelete = { text = '~' },
+  },
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+    delay = 500,
+    ignore_whitespace = false,
   },
 }
 
@@ -235,7 +259,7 @@ require("nvim-tree").setup({
     group_empty = false,
     highlight_git = false,
     full_name = false,
-    highlight_opened_files = "none",
+    highlight_opened_files = "all",
     root_folder_label = ":~:s?$?/..?",
     indent_width = 2,
     indent_markers = {
@@ -555,6 +579,7 @@ require('neogen').setup({ snippet_engine = 'luasnip' });
 -- vim: ts=2 sts=2 sw=2 et
 vim.cmd('source $HOME/.config/nvim/term.vim')
 vim.cmd('source $HOME/.config/nvim/dappy.lua')
+vim.cmd('source $HOME/.config/nvim/newplugs.lua');
 -- require('newplugs')
 
 
@@ -562,6 +587,10 @@ vim.cmd('source $HOME/.config/nvim/dappy.lua')
 vim.api.nvim_create_user_command('W', function(_)
   vim.cmd('w')
 end, { desc = ':W = :w' })
+
+vim.api.nvim_create_user_command('Q', function(_)
+  vim.cmd('q')
+end, { desc = ':Q = :q' })
 
 
 

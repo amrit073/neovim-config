@@ -26,6 +26,32 @@ function! TermToggle(height)
 
     endif
 endfunction
+
+function! GetCursor()
+    let g:position = getpos('.')
+endfunction
+
+function! SetCursor()
+    call setpos('.', g:position)
+endfunction
+
+function! NextGit()
+    call GetCursor()
+    cprevious
+    call SetCursor()
+    norm zz
+endfunction
+
+function! PrevGit()
+    call GetCursor()
+    cnext
+    call SetCursor()
+    norm zz
+endfunction
+
+
+noremap <F2> :call SomeFunc()<CR>
+
 " Toggle terminal on/off (neovim)
 nnoremap <leader>t :call TermToggle(8)<CR>
 tnoremap <Esc> <C-\><C-n><C-w>w
@@ -46,6 +72,12 @@ inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 nnoremap <leader>d :Neogen <CR>
+nnoremap [p :call PrevGit()<CR>
+nnoremap ]p :call NextGit()<CR>
+" nnoremap [p :cnext <CR>
+" nnoremap ]p :cprevious <CR>
+" nnoremap [p :let save_cursor=getcurpos() <bar> 0cnext <bar> call setpos('.', save_cursor)<CR>
+" nnoremap ]p :let save_cursor=getcurpos() <bar> 0cprevious <bar> call setpos('.', save_cursor)<CR>
 
 
 
@@ -78,4 +110,6 @@ Plug 'theHamsta/nvim-dap-virtual-text'
 Plug 'mxsdev/nvim-dap-vscode-js'
 Plug 'kkoomen/vim-doge'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'kyoz/purify', { 'rtp': 'vim' }
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 call plug#end()
