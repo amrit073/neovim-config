@@ -74,19 +74,188 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  ["nvim-neoclip.lua"] = {
-    config = { "\27LJ\2\n¡\6\0\0\a\0\29\0'6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0006\3\4\0009\3\5\0039\3\6\3'\5\a\0B\3\2\2'\4\b\0&\3\4\3=\3\t\0025\3\n\0=\3\v\0025\3\f\0=\3\r\0025\3\14\0=\3\15\0025\3\16\0=\3\17\0025\3\24\0005\4\20\0005\5\18\0004\6\0\0=\6\19\5=\5\21\0045\5\22\0004\6\0\0=\6\19\5=\5\23\4=\4\25\0035\4\26\0004\5\0\0=\5\19\4=\4\27\3=\3\28\2B\0\2\1K\0\1\0\tkeys\bfzf\1\0\3\npaste\vctrl-p\17paste_behind\vctrl-k\vselect\fdefault\14telescope\1\0\0\6n\1\0\6\vreplay\6q\tedit\6e\17paste_behind\6P\vdelete\6d\npaste\6p\vselect\t<cr>\6i\1\0\0\vcustom\1\0\6\vreplay\n<c-q>\tedit\n<c-e>\17paste_behind\n<c-k>\vdelete\n<c-d>\npaste\n<c-p>\vselect\t<cr>\21on_custom_action\1\0\1\20close_telescope\2\14on_replay\1\0\3\20close_telescope\2\18move_to_front\1\fset_reg\1\ron_paste\1\0\3\20close_telescope\2\18move_to_front\1\fset_reg\1\14on_select\1\0\2\20close_telescope\2\18move_to_front\1\fdb_path\31/databases/neoclip.sqlite3\tdata\fstdpath\afn\bvim\1\0\t\fpreview\2\24content_spec_column\1\25enable_macro_history\2\28default_register_macros\6q\21default_register\6\"\20continuous_sync\1\17length_limit\3ÄÄ@\30enable_persistent_history\1\fhistory\0032\nsetup\fneoclip\frequire\0" },
+  ["Comment.nvim"] = {
     loaded = true,
-    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/nvim-neoclip.lua",
-    url = "https://github.com/AckslD/nvim-neoclip.lua"
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/Comment.nvim",
+    url = "https://github.com/numToStr/Comment.nvim"
+  },
+  LuaSnip = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/LuaSnip",
+    url = "https://github.com/L3MON4D3/LuaSnip"
+  },
+  ["bufferline.nvim"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
+    url = "https://github.com/akinsho/bufferline.nvim"
+  },
+  ["cmp-buffer"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/cmp-buffer",
+    url = "https://github.com/hrsh7th/cmp-buffer"
+  },
+  ["cmp-cmdline"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/cmp-cmdline",
+    url = "https://github.com/hrsh7th/cmp-cmdline"
+  },
+  ["cmp-nvim-lsp"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
+    url = "https://github.com/hrsh7th/cmp-nvim-lsp"
+  },
+  ["cmp-nvim-lsp-signature-help"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp-signature-help",
+    url = "https://github.com/hrsh7th/cmp-nvim-lsp-signature-help"
+  },
+  ["cmp-path"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/cmp-path",
+    url = "https://github.com/hrsh7th/cmp-path"
+  },
+  cmp_luasnip = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
+    url = "https://github.com/saadparwaiz1/cmp_luasnip"
+  },
+  ["friendly-snippets"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/friendly-snippets",
+    url = "https://github.com/rafamadriz/friendly-snippets"
+  },
+  ["gitsigns.nvim"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
+    url = "https://github.com/lewis6991/gitsigns.nvim"
+  },
+  ["indent-blankline.nvim"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+    url = "https://github.com/lukas-reineke/indent-blankline.nvim"
+  },
+  ["lualine.nvim"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+    url = "https://github.com/nvim-lualine/lualine.nvim"
+  },
+  ["mason-lspconfig.nvim"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
+    url = "https://github.com/williamboman/mason-lspconfig.nvim"
+  },
+  ["mason.nvim"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/mason.nvim",
+    url = "https://github.com/williamboman/mason.nvim"
+  },
+  neogen = {
+    config = { "\27LJ\2\nZ\0\0\4\0\4\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\3\0005\3\3\0>\3\1\2B\0\2\1K\0\1\0\1\0\1\19snippet_engine\fluasnip\nsetup\vneogen\frequire\0" },
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/neogen",
+    url = "https://github.com/danymat/neogen"
+  },
+  ["neoscroll.nvim"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/neoscroll.nvim",
+    url = "https://github.com/karb94/neoscroll.nvim"
+  },
+  ["nvim-autopairs"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
+    url = "https://github.com/windwp/nvim-autopairs"
+  },
+  ["nvim-cmp"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/nvim-cmp",
+    url = "https://github.com/hrsh7th/nvim-cmp"
+  },
+  ["nvim-lspconfig"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
+    url = "https://github.com/neovim/nvim-lspconfig"
+  },
+  ["nvim-tree.lua"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
+    url = "https://github.com/nvim-tree/nvim-tree.lua"
+  },
+  ["nvim-treesitter"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter"
+  },
+  ["nvim-treesitter-textobjects"] = {
+    load_after = {},
+    loaded = true,
+    needs_bufread = false,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-textobjects",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
+  },
+  ["nvim-web-devicons"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
+    url = "https://github.com/nvim-tree/nvim-web-devicons"
+  },
+  ["onedark.nvim"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/onedark.nvim",
+    url = "https://github.com/navarasu/onedark.nvim"
+  },
+  ["packer.nvim"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/packer.nvim",
+    url = "https://github.com/wbthomason/packer.nvim"
+  },
+  ["plenary.nvim"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/plenary.nvim",
+    url = "https://github.com/nvim-lua/plenary.nvim"
+  },
+  ["telescope-fzf-native.nvim"] = {
+    cond = { true },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/opt/telescope-fzf-native.nvim",
+    url = "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
+  },
+  ["telescope.nvim"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+    url = "https://github.com/nvim-telescope/telescope.nvim"
+  },
+  ["vim-fugitive"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    url = "https://github.com/tpope/vim-fugitive"
+  },
+  ["vim-sleuth"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/vim-sleuth",
+    url = "https://github.com/tpope/vim-sleuth"
+  },
+  ["which-key.nvim"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/which-key.nvim",
+    url = "https://github.com/folke/which-key.nvim"
   }
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: nvim-neoclip.lua
-time([[Config for nvim-neoclip.lua]], true)
-try_loadstring("\27LJ\2\n¡\6\0\0\a\0\29\0'6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0006\3\4\0009\3\5\0039\3\6\3'\5\a\0B\3\2\2'\4\b\0&\3\4\3=\3\t\0025\3\n\0=\3\v\0025\3\f\0=\3\r\0025\3\14\0=\3\15\0025\3\16\0=\3\17\0025\3\24\0005\4\20\0005\5\18\0004\6\0\0=\6\19\5=\5\21\0045\5\22\0004\6\0\0=\6\19\5=\5\23\4=\4\25\0035\4\26\0004\5\0\0=\5\19\4=\4\27\3=\3\28\2B\0\2\1K\0\1\0\tkeys\bfzf\1\0\3\npaste\vctrl-p\17paste_behind\vctrl-k\vselect\fdefault\14telescope\1\0\0\6n\1\0\6\vreplay\6q\tedit\6e\17paste_behind\6P\vdelete\6d\npaste\6p\vselect\t<cr>\6i\1\0\0\vcustom\1\0\6\vreplay\n<c-q>\tedit\n<c-e>\17paste_behind\n<c-k>\vdelete\n<c-d>\npaste\n<c-p>\vselect\t<cr>\21on_custom_action\1\0\1\20close_telescope\2\14on_replay\1\0\3\20close_telescope\2\18move_to_front\1\fset_reg\1\ron_paste\1\0\3\20close_telescope\2\18move_to_front\1\fset_reg\1\14on_select\1\0\2\20close_telescope\2\18move_to_front\1\fdb_path\31/databases/neoclip.sqlite3\tdata\fstdpath\afn\bvim\1\0\t\fpreview\2\24content_spec_column\1\25enable_macro_history\2\28default_register_macros\6q\21default_register\6\"\20continuous_sync\1\17length_limit\3ÄÄ@\30enable_persistent_history\1\fhistory\0032\nsetup\fneoclip\frequire\0", "config", "nvim-neoclip.lua")
-time([[Config for nvim-neoclip.lua]], false)
+-- Config for: neogen
+time([[Config for neogen]], true)
+try_loadstring("\27LJ\2\nZ\0\0\4\0\4\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\3\0005\3\3\0>\3\1\2B\0\2\1K\0\1\0\1\0\1\19snippet_engine\fluasnip\nsetup\vneogen\frequire\0", "config", "neogen")
+time([[Config for neogen]], false)
+-- Conditional loads
+time([[Conditional loading of telescope-fzf-native.nvim]], true)
+  require("packer.load")({"telescope-fzf-native.nvim"}, {}, _G.packer_plugins)
+time([[Conditional loading of telescope-fzf-native.nvim]], false)
+-- Load plugins in order defined by `after`
+time([[Sequenced loading]], true)
+vim.cmd [[ packadd nvim-treesitter ]]
+vim.cmd [[ packadd nvim-treesitter-textobjects ]]
+time([[Sequenced loading]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

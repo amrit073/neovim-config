@@ -54,6 +54,7 @@ noremap <F2> :call SomeFunc()<CR>
 
 " Toggle terminal on/off (neovim)
 nnoremap <leader>t :call TermToggle(8)<CR>
+nnoremap <leader>r :call TermToggle(8)<CR>:call TermToggle(8)<Up><CR>
 tnoremap <Esc> <C-\><C-n><C-w>w
 nnoremap <leader>v :NvimTreeToggle<CR> 
 nnoremap <leader>b <C-\><C-n><C-w>w<cr>

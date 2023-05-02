@@ -19,6 +19,7 @@ require('packer').startup(function(use)
       'williamboman/mason-lspconfig.nvim',
     },
   }
+  use "folke/which-key.nvim"
   -- use { 'anuvyklack/pretty-fold.nvim',
   --   config = function()
   --     require('pretty-fold').setup()
@@ -188,6 +189,8 @@ require('neoscroll').setup({
   post_hook = nil,             -- Function to run after the scrolling animation ends
   performance_mode = false,    -- Disable "Performance Mode" on all buffers.
 })
+
+require('which-key').setup()
 
 -- Set lualine as statusline
 -- See `:help lualine.txt`
