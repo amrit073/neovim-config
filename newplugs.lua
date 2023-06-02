@@ -40,7 +40,7 @@ require('packer').startup(function(use)
                             paste_behind = '<c-k>',
                             replay = '<c-q>', -- replay a macro
                             delete = '<c-d>', -- delete an entry
-                            edit = '<c-e>', -- edit an entry
+                            edit = '<c-e>',   -- edit an entry
                             custom = {},
                         },
                         n = {
@@ -60,4 +60,3 @@ require('packer').startup(function(use)
         end,
     }
 end)
-

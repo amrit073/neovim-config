@@ -80,6 +80,7 @@ require('packer').startup(function(use)
 
   use 'karb94/neoscroll.nvim'
 
+  use { "petertriho/nvim-scrollbar" }
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -175,6 +176,25 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+require("scrollbar").setup({
+  handle = {
+    text = " ",
+    blend = 0,                  -- Integer between 0 and 100. 0 for fully opaque and 100 to full transparent. Defaults to 30.
+    color = nil,
+    color_nr = nil,             -- cterm
+    highlight = "CursorColumn",
+    hide_if_all_visible = true, -- Hides handle if all lines are visible
+  },
+  handlers = {
+    cursor = false,
+    diagnostic = true,
+    gitsigns = true, -- Requires gitsigns
+    handle = true,
+    search = false,  -- Requires hlslens
+    ale = false,     -- Requires ALE
+  },
+}
+)
 
 require('neoscroll').setup({
   -- All these keys will be mapped to their corresponding default scrolling animation
@@ -368,7 +388,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'typescript', 'help' },
+  ensure_installed = { 'c', 'cpp', 'typescript' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
