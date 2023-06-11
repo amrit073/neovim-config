@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/home/amrit/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["NeoNoName.lua"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/NeoNoName.lua",
+    url = "https://github.com/nyngwang/NeoNoName.lua"
+  },
   ["bufferline.nvim"] = {
     loaded = true,
     path = "/home/amrit/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
@@ -174,6 +179,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/amrit/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
+  },
+  ["nvim-scrollbar"] = {
+    loaded = true,
+    path = "/home/amrit/.local/share/nvim/site/pack/packer/start/nvim-scrollbar",
+    url = "https://github.com/petertriho/nvim-scrollbar"
   },
   ["nvim-tree.lua"] = {
     loaded = true,

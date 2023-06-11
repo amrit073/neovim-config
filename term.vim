@@ -58,7 +58,7 @@ nnoremap <leader>r :call TermToggle(8)<CR>:call TermToggle(8)<Up><CR>
 tnoremap <Esc> <C-\><C-n><C-w>w
 nnoremap <leader>v :NvimTreeToggle<CR> 
 nnoremap <leader>b <C-\><C-n><C-w>w<cr>
-nnoremap <leader>n :lua vim.diagnostic.goto_next()<CR>
+nnoremap <leader>n :lua vim.diagnostic.goto_next({severity=vim.diagnostic.severity.ERROR})<CR>
 nnoremap <C-l> :bn<cr>
 nnoremap <C-h> :bp<cr>
 set relativenumber
@@ -80,11 +80,8 @@ nnoremap ]p :call NextGit()<CR>
 " nnoremap [p :let save_cursor=getcurpos() <bar> 0cnext <bar> call setpos('.', save_cursor)<CR>
 " nnoremap ]p :let save_cursor=getcurpos() <bar> 0cprevious <bar> call setpos('.', save_cursor)<CR>
 
-nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>
-nnoremap gpt <cmd>lua require('goto-preview').goto_preview_type_definition()<CR>
-nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>
-nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>
-nnoremap gpr <cmd>lua require('goto-preview').goto_preview_references()<CR>
+nnoremap <leader>. :Gitsigns next_hunk <CR>
+nnoremap <leader>, :Gitsigns prev_hunk <CR>
 
 
 " Bufferlines....

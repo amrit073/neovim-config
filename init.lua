@@ -82,6 +82,8 @@ require('packer').startup(function(use)
 
   use { "petertriho/nvim-scrollbar" }
 
+  use 'nyngwang/NeoNoName.lua'
+
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
   if has_plugins then
@@ -614,8 +616,6 @@ end, { desc = ':W = :w' })
 vim.api.nvim_create_user_command('Q', function(_)
   vim.cmd('q')
 end, { desc = ':Q = :q' })
-
-
 
 
 
