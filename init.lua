@@ -277,7 +277,8 @@ require("nvim-tree").setup({
     enable = true,
   },
   view = {
-    side = "right"
+    side = "right",
+    preserve_window_proportions = true,
   },
   renderer = {
     add_trailing = false,
