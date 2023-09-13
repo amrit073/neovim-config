@@ -109,7 +109,6 @@ call plug#begin()
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'theHamsta/nvim-dap-virtual-text'
-Plug 'mxsdev/nvim-dap-vscode-js'
 Plug 'kkoomen/vim-doge'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'kyoz/purify', { 'rtp': 'vim' }

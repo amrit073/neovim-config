@@ -1,33 +1,28 @@
 -- setup adapters
 require('dap-vscode-js').setup({
-    debugger_path = vim.fn.stdpath('data') .. '/mason/packages/js-debug-adapter',
-    debugger_cmd = { 'js-debug-adapter' },
     adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
 })
 
 local dap = require('dap')
 
 
-
-
-
--- custom adapter for running tasks before starting debug
-local custom_adapter = 'pwa-node-custom'
-dap.adapters[custom_adapter] = function(cb, config)
-    if config.preLaunchTask then
-        local async = require('plenary.async')
-        local notify = require('notify').async
-
-        async.run(function()
-            ---@diagnostic disable-next-line: missing-parameter
-            notify('Running [' .. config.preLaunchTask .. ']').events.close()
-        end, function()
-            vim.fn.system(config.preLaunchTask)
-            config.type = 'pwa-node'
-            dap.run(config)
-        end)
-    end
-end
+-- -- custom adapter for running tasks before starting debug
+-- local custom_adapter = 'pwa-node-custom'
+-- dap.adapters[custom_adapter] = function(cb, config)
+--     if config.preLaunchTask then
+--         local async = require('plenary.async')
+--         local notify = require('notify').async
+--
+--         async.run(function()
+--             ---@diagnostic disable-next-line: missing-parameter
+--             notify('Running [' .. config.preLaunchTask .. ']').events.close()
+--         end, function()
+--             vim.fn.system(config.preLaunchTask)
+--             config.type = 'pwa-node'
+--             dap.run(config)
+--         end)
+--     end
+-- end
 
 -- language config
 for _, language in ipairs({ 'typescript', 'javascript' }) do
@@ -48,24 +43,33 @@ for _, language in ipairs({ 'typescript', 'javascript' }) do
                 NODE_ENV = 'development'
             }
         },
+
         {
-            name = 'test',
-            type = 'pwa-node',
-            cwd = vim.fn.getcwd(),
-            request = 'launch',
-            runtimeArgs = { "NODE_ENV=test", "${workspaceFolder}/node_modules/mocha/bin/_mocha", '-t', '10000', '--exit',
-                '--recursive', '--require',
-                'ts-node/register', 'test/controllers/owner.signup.test.ts' },
-            program = '${workspaceFolder}/node_modules/mocha/bin/_mocha',
-            sourceMaps = true,
-            skipFiles = { '<node_internals>/**' },
-        }, {
-            name = 'Attach to node process',
-            type = 'pwa-node',
-            request = 'attach',
-            rootPath = '${workspaceFolder}',
-            processId = require('dap.utils').pick_process,
+            {
+                type = "pwa-node",
+                request = "launch",
+                name = "Debug Mocha Tests",
+                -- trace = true, -- include debugger info
+                runtimeExecutable = "node",
+                runtimeArgs = {
+                    "./node_modules/mocha/bin/mocha.js", "--nolazy", "-r", "ts-node/register/transpile-only",
+                },
+                rootPath = "${workspaceFolder}",
+                cwd = "${workspaceFolder}",
+                console = "integratedTerminal",
+                internalConsoleOptions = "neverOpen",
+                env = {
+                    NODE_ENV = 'development'
+                }
+            }
         }
+        , {
+        name = 'Attach to node process',
+        type = 'pwa-node',
+        request = 'attach',
+        rootPath = '${workspaceFolder}',
+        processId = require('dap.utils').pick_process,
+    }
     }
 end
 
@@ -128,8 +132,8 @@ dapui.setup({
         },
     },
     floating = {
-        max_height = nil, -- These can be integers or a float between 0 and 1.
-        max_width = nil, -- Floats will be treated as percentage of your screen.
+        max_height = nil,  -- These can be integers or a float between 0 and 1.
+        max_width = nil,   -- Floats will be treated as percentage of your screen.
         border = "single", -- Border style. Can be "single", "double" or "rounded"
         mappings = {
             close = { "q", "<Esc>" },

@@ -62,7 +62,7 @@ require('packer').startup(function(use)
   use 'tpope/vim-fugitive'
   use 'lewis6991/gitsigns.nvim'
 
-  use { 'NeogitOrg/neogit', requires = 'nvim-lua/plenary.nvim' }
+  -- use { 'NeogitOrg/neogit', requires = 'nvim-lua/plenary.nvim' }
   use 'navarasu/onedark.nvim'               -- Theme inspired by Atom
   use 'nvim-lualine/lualine.nvim'           -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
@@ -84,6 +84,13 @@ require('packer').startup(function(use)
   use { "petertriho/nvim-scrollbar" }
 
   use 'nyngwang/NeoNoName.lua'
+
+  use {
+    "microsoft/vscode-js-debug",
+    opt = true,
+    run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
+  }
+  use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -387,6 +394,7 @@ vim.keymap.set('n', '<leader>sc', require('telescope.builtin').commands, { desc 
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>ss', require('telescope.builtin').git_status, { desc = '[S]earch Git [S]tash' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -606,7 +614,7 @@ require('neogen').setup({ snippet_engine = 'luasnip' });
 -- vim: ts=2 sts=2 sw=2 et
 vim.cmd('source $HOME/.config/nvim/term.vim')
 vim.cmd('source $HOME/.config/nvim/dappy.lua')
-vim.cmd('source $HOME/.config/nvim/newplugs.lua');
+-- vim.cmd('source $HOME/.config/nvim/newplugs.lua');
 -- require('newplugs')
 
 
@@ -618,13 +626,6 @@ end, { desc = ':W = :w' })
 vim.api.nvim_create_user_command('Q', function(_)
   vim.cmd('q')
 end, { desc = ':Q = :q' })
-
-
-
-
-
-
-
 
 
 
