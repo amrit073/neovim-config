@@ -54,7 +54,6 @@ noremap <F2> :call SomeFunc()<CR>
 
 " Toggle terminal on/off (neovim)
 nnoremap <leader>t :call TermToggle(8)<CR>
-nnoremap <leader>r :call TermToggle(8)<CR>:call TermToggle(8)<Up><CR>
 tnoremap <Esc> <C-\><C-n><C-w>w
 nnoremap <leader>v :NvimTreeToggle<CR> 
 nnoremap <leader>b <C-\><C-n><C-w>w<cr>
@@ -95,7 +94,7 @@ nnoremap <leader>7 :BufferLineGoToBuffer 7<CR>
 nnoremap <leader>8 :BufferLineGoToBuffer 8<CR>
 
 nnoremap <tab> :lua vim.lsp.buf.hover()<cr>
-autocmd BufWritePre *.js,*.ts,*.c,*.cpp,*.rs,*lua Format
+autocmd BufWritePre *.js,*.ts,*.c,*.cpp,*.rs,*lua,*.go Format
 function! CleanEmptyBuffers()
     let buffers = filter(range(1, bufnr('$')), 'buflisted(v:val) && empty(bufname(v:val)) && bufwinnr(v:val)<0 && !getbufvar(v:val, "&mod")')
     if !empty(buffers)

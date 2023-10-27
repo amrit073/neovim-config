@@ -43,33 +43,40 @@ for _, language in ipairs({ 'typescript', 'javascript' }) do
                 NODE_ENV = 'development'
             }
         },
-
         {
-            {
-                type = "pwa-node",
-                request = "launch",
-                name = "Debug Mocha Tests",
-                -- trace = true, -- include debugger info
-                runtimeExecutable = "node",
-                runtimeArgs = {
-                    "./node_modules/mocha/bin/mocha.js", "--nolazy", "-r", "ts-node/register/transpile-only",
-                },
-                rootPath = "${workspaceFolder}",
-                cwd = "${workspaceFolder}",
-                console = "integratedTerminal",
-                internalConsoleOptions = "neverOpen",
-                env = {
-                    NODE_ENV = 'development'
-                }
+            type = "pwa-node",
+            request = "launch",
+            name = "simple",
+            -- trace = true, -- include debugger info
+            runtimeExecutable = "npm",
+            runtimeArgs = {
+                "run", "start:dev"
+            },
+            rootPath = "${workspaceFolder}",
+            cwd = "${workspaceFolder}",
+            console = "integratedTerminal",
+            internalConsoleOptions = "neverOpen",
+            env = {
+                NODE_ENV = 'development'
+            }
+        },
+        {
+            type = "pwa-node",
+            request = "launch",
+            name = "Debug Mocha Tests",
+            -- trace = true, -- include debugger info
+            runtimeExecutable = "npm",
+            runtimeArgs = {
+                "run", "test"
+            },
+            rootPath = "${workspaceFolder}",
+            cwd = "${workspaceFolder}",
+            console = "integratedTerminal",
+            internalConsoleOptions = "neverOpen",
+            env = {
+                NODE_ENV = 'development'
             }
         }
-        , {
-        name = 'Attach to node process',
-        type = 'pwa-node',
-        request = 'attach',
-        rootPath = '${workspaceFolder}',
-        processId = require('dap.utils').pick_process,
-    }
     }
 end
 
@@ -173,4 +180,5 @@ vim.keymap.set('n', '<F6>', require 'dap'.step_over)
 vim.keymap.set('n', '<F4>', require 'dap'.step_into)
 vim.keymap.set('n', '<F8>', require 'dap'.step_out)
 vim.keymap.set('n', '<F7>', require 'dap'.toggle_breakpoint)
+vim.keymap.set('n', '<F1>', require 'dap'.clear_breakpoints)
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
