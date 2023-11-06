@@ -25,6 +25,8 @@ require('packer').startup(function(use)
   --     require('pretty-fold').setup()
   --   end
   -- }
+  use "linux-cultist/venv-selector.nvim"
+  use 'AckslD/swenv.nvim'
   use {
     "danymat/neogen",
     config = function()
@@ -63,11 +65,11 @@ require('packer').startup(function(use)
   use 'lewis6991/gitsigns.nvim'
 
   -- use { 'NeogitOrg/neogit', requires = 'nvim-lua/plenary.nvim' }
-  use 'navarasu/onedark.nvim'               -- Theme inspired by Atom
-  use 'nvim-lualine/lualine.nvim'           -- Fancier statusline
-  use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines
-  use 'numToStr/Comment.nvim'               -- "gc" to comment visual regions/lines
-  use 'tpope/vim-sleuth'                    -- Detect tabstop and shiftwidth automatically
+  use 'navarasu/onedark.nvim'                   -- Theme inspired by Atom
+  use 'nvim-lualine/lualine.nvim'               -- Fancier statusline
+  use { 'lukas-reineke/indent-blankline.nvim' } -- Add indentation guides even on blank lines
+  use 'numToStr/Comment.nvim'                   -- "gc" to comment visual regions/lines
+  use 'tpope/vim-sleuth'                        -- Detect tabstop and shiftwidth automatically
 
   -- Fuzzy Finder (files, lsp, etc)
   use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
@@ -186,6 +188,19 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+require('swenv').setup({
+  -- Should return a list of tables with a `name` and a `path` entry each.
+  -- Gets the argument `venvs_path` set below.
+  -- By default just lists the entries in `venvs_path`.
+  get_venvs = function(venvs_path)
+    return require('swenv.api').get_venvs(venvs_path)
+  end,
+  -- Path passed to `get_venvs`.
+  venvs_path = vim.fn.expand('~/venvs'),
+  -- Something to do after setting an environment, for example call vim.cmd.LspRestart
+  post_set_venv = nil,
+})
+
 require("scrollbar").setup({
   handle = {
     text = " ",
@@ -230,7 +245,20 @@ require('lualine').setup {
     theme = 'onedark',
     component_separators = '|',
     section_separators = '',
+    sections = {
+      lualine_a = 'swenv',
+      lualine_x = { 'swenv', icon = '' }
+    }
   },
+}
+
+
+require("venv-selector").setup {
+  options = {
+    parents = 1,
+    event = "VeryLazy",
+    search = false
+  }
 }
 
 -- Enable Comment.nvim
@@ -238,10 +266,18 @@ require('Comment').setup()
 
 -- Enable `lukas-reineke/indent-blankline.nvim`
 -- See `:help indent_blankline.txt`
-require('indent_blankline').setup {
-  char = '┊',
-  show_trailing_blankline_indent = false,
+local highlight = {
+  "CursorColumn",
 }
+
+require("ibl").setup({
+  indent = {
+    char = '┊',
+    highlight = highlight
+  },
+  scope = { enabled = false },
+}
+)
 require('nvim-autopairs').setup()
 -- Gitsigns
 -- See `:help gitsigns.txt`

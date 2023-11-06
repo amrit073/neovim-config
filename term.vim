@@ -102,8 +102,6 @@ function! CleanEmptyBuffers()
     endif
 endfunction
 
-
-
 call plug#begin()
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
