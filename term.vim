@@ -58,6 +58,7 @@ tnoremap <Esc> <C-\><C-n><C-w>w
 nnoremap <leader>v :NvimTreeToggle<CR> 
 nnoremap <leader>b <C-\><C-n><C-w>w<cr>
 nnoremap <leader>n :lua vim.diagnostic.goto_next({severity=vim.diagnostic.severity.ERROR})<CR>
+nnoremap <leader>m :lua vim.diagnostic.goto_next()<CR>
 nnoremap <C-l> :bn<cr>
 nnoremap <C-h> :bp<cr>
 set relativenumber
@@ -83,6 +84,14 @@ nnoremap <leader>. :Gitsigns next_hunk <CR>
 nnoremap <leader>, :Gitsigns prev_hunk <CR>
 
 
+nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>
+nnoremap gpt <cmd>lua require('goto-preview').goto_preview_type_definition()<CR>
+nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>
+nnoremap gpD <cmd>lua require('goto-preview').goto_preview_declaration()<CR>
+nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>
+nnoremap gpr <cmd>lua require('goto-preview').goto_preview_references()<CR>
+
+
 " Bufferlines....
 nnoremap <leader>1 :BufferLineGoToBuffer 1<CR>
 nnoremap <leader>2 :BufferLineGoToBuffer 2<CR>
@@ -103,6 +112,7 @@ function! CleanEmptyBuffers()
 endfunction
 
 call plug#begin()
+Plug 'averms/black-nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'theHamsta/nvim-dap-virtual-text'
@@ -110,4 +120,5 @@ Plug 'kkoomen/vim-doge'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'kyoz/purify', { 'rtp': 'vim' }
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+" Plug 'WhoIsSethDaniel/mason-tool-installer.nvim'
 call plug#end()
