@@ -103,7 +103,7 @@ nnoremap <leader>7 :BufferLineGoToBuffer 7<CR>
 nnoremap <leader>8 :BufferLineGoToBuffer 8<CR>
 
 nnoremap <tab> :lua vim.lsp.buf.hover()<cr>
-autocmd BufWritePre *.js,*.ts,*.c,*.cpp,*.rs,*lua,*.go,*.py Format
+autocmd BufWritePre *.js,*.ts,*.c,*.cpp,*.rs,*lua,*.go Format
 function! CleanEmptyBuffers()
     let buffers = filter(range(1, bufnr('$')), 'buflisted(v:val) && empty(bufname(v:val)) && bufwinnr(v:val)<0 && !getbufvar(v:val, "&mod")')
     if !empty(buffers)
@@ -112,7 +112,6 @@ function! CleanEmptyBuffers()
 endfunction
 
 call plug#begin()
-Plug 'averms/black-nvim'
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 Plug 'theHamsta/nvim-dap-virtual-text'
@@ -120,5 +119,6 @@ Plug 'kkoomen/vim-doge'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'kyoz/purify', { 'rtp': 'vim' }
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 " Plug 'WhoIsSethDaniel/mason-tool-installer.nvim'
 call plug#end()

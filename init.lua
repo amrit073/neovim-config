@@ -95,6 +95,7 @@ require('packer').startup(function(use)
     run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
   }
   use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
+  use 'mfussenegger/nvim-dap-python'
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -236,8 +237,6 @@ require('neoscroll').setup({
   post_hook = nil,             -- Function to run after the scrolling animation ends
   performance_mode = false,    -- Disable "Performance Mode" on all buffers.
 })
-
-require('which-key').setup()
 
 require('goto-preview').setup {
   width = 120, -- Width of the floating window
@@ -588,6 +587,9 @@ local servers = {
   -- pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
+  pyright = {
+    inlay_hints = true
+  }
 
 
 }
