@@ -3,7 +3,7 @@ require('dap-vscode-js').setup({
     adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
 })
 
-require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+require('dap-python').setup('/home/amrit/.virtualenvs/debugpy/bin/python')
 local dap = require('dap')
 
 
@@ -51,7 +51,7 @@ for _, language in ipairs({ 'typescript', 'javascript' }) do
             -- trace = true, -- include debugger info
             runtimeExecutable = "npm",
             runtimeArgs = {
-                "run", "start:dev"
+                "run", "dev"
             },
             rootPath = "${workspaceFolder}",
             cwd = "${workspaceFolder}",
@@ -159,7 +159,26 @@ vim.fn.sign_define('DapStopped', { text = '⏭', texthl = 'DapStopped', linehl =
 
 
 
-require("nvim-dap-virtual-text").setup()
+require("nvim-dap-virtual-text").setup({
+    -- comment = true,
+    -- virt_lines = true,
+    virt_text_pos = 'eol',
+    display_callback = function(variable, buf, stackframe, node, options)
+        local text = ""
+        if options.virt_text_pos == 'inline' then
+            text = ' = ' .. variable.value
+        else
+            text = variable.name .. ' = ' .. variable.value
+        end
+
+        -- Truncate the text to 100 characters if it exceeds that length
+        if #text > 50 then
+            text = text:sub(1, 50) .. ".."
+        end
+
+        return text
+    end,
+})
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
     dapui.open()

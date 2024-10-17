@@ -36,7 +36,7 @@ require('packer').startup(function(use)
     -- Uncomment next line if you want to follow only stable versions
     -- tag = "*"
   }
-  use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
+  use { 'akinsho/bufferline.nvim', tag = "v4.*", requires = 'nvim-tree/nvim-web-devicons' }
 
   use { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -276,13 +276,6 @@ require('lualine').setup {
 }
 
 
-require("venv-selector").setup {
-  options = {
-    parents = 1,
-    event = "VeryLazy",
-    search = false
-  }
-}
 
 -- Enable Comment.nvim
 require('Comment').setup()
@@ -453,6 +446,7 @@ vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { de
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 vim.keymap.set('n', '<leader>ss', require('telescope.builtin').git_status, { desc = '[S]earch Git [S]tash' })
+vim.keymap.set('n', '<leader>st', require('telescope.builtin').treesitter, { desc = '[S]earch [T]reesitter' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -531,13 +525,14 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
   --
   -- In this case, we create a function that lets us more easily define mappings specific
   -- for LSP related items. It sets the mode, buffer and description for us each time.
+  --
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
@@ -587,11 +582,17 @@ local servers = {
   -- pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
+  -- pyright = {
+  --   inlay_hints = true
+  --
+  -- },
+  --
   pyright = {
     inlay_hints = true
-  }
-
-
+  },
+  ruff_lsp = {
+    inlay_hints = true
+  },
 }
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
@@ -668,10 +669,9 @@ cmp.setup {
       end
     end, { 'i', 's' }),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+      local copilot_keys = vim.fn['copilot#Accept']()
+      if copilot_keys ~= '' and type(copilot_keys) == 'string' then
+        vim.api.nvim_feedkeys(copilot_keys, 'i', true)
       else
         fallback()
       end
