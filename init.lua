@@ -96,6 +96,17 @@ require('packer').startup(function(use)
   }
   use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
   use 'mfussenegger/nvim-dap-python'
+  use {
+    "supermaven-inc/supermaven-nvim",
+    config = function()
+      require("supermaven-nvim").setup({
+        keymaps = {
+          accept_suggestion = "<Tab>",
+        },
+        disable_keymaps = false, -- disables built in keymaps for more manual control
+      })
+    end,
+  }
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -191,18 +202,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
-require('swenv').setup({
-  -- Should return a list of tables with a `name` and a `path` entry each.
-  -- Gets the argument `venvs_path` set below.
-  -- By default just lists the entries in `venvs_path`.
-  get_venvs = function(venvs_path)
-    return require('swenv.api').get_venvs(venvs_path)
-  end,
-  -- Path passed to `get_venvs`.
-  venvs_path = vim.fn.expand('~/venvs'),
-  -- Something to do after setting an environment, for example call vim.cmd.LspRestart
-  post_set_venv = nil,
-})
+-- require('swenv').setup({
+--   -- Should return a list of tables with a `name` and a `path` entry each.
+--   -- Gets the argument `venvs_path` set below.
+--   -- By default just lists the entries in `venvs_path`.
+--   get_venvs = function(venvs_path)
+--     return require('swenv.api').get_venvs(venvs_path)
+--   end,
+--   -- Path passed to `get_venvs`.
+--   venvs_path = vim.fn.expand('~/venvs'),
+--   -- Something to do after setting an environment, for example call vim.cmd.LspRestart
+--   post_set_venv = nil,
+-- })
 
 require("scrollbar").setup({
   handle = {
@@ -602,12 +613,28 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 -- Setup mason so it can manage external tooling
 require('mason').setup()
 
+-- This strips out &nbsp; and some ending escaped backslashes out of hover
+-- strings because the pyright LSP is... odd with how it creates hover strings.
+local hover = function(_, result, ctx, config)
+  if not (result and result.contents) then
+    return vim.lsp.handlers.hover(_, result, ctx, config)
+  end
+  if type(result.contents) == "string" then
+    local s = string.gsub(result.contents or "", "&nbsp;", " ")
+    s = string.gsub(s, [[\\\n]], [[\n]])
+    result.contents = s
+    return vim.lsp.handlers.hover(_, result, ctx, config)
+  else
+    local s = string.gsub((result.contents or {}).value or "", "&nbsp;", " ")
+    s = string.gsub(s, "\\\n", "\n")
+    result.contents.value = s
+    return vim.lsp.handlers.hover(_, result, ctx, config)
+  end
+end
+
 -- Ensure the servers above are installed
 local mason_lspconfig = require 'mason-lspconfig'
 
-mason_lspconfig.setup {
-  ensure_installed = vim.tbl_keys(servers),
-}
 
 mason_lspconfig.setup_handlers {
   function(server_name)
@@ -668,13 +695,35 @@ cmp.setup {
         fallback()
       end
     end, { 'i', 's' }),
+    -- ['<S-Tab>'] = cmp.mapping(function(fallback)
+    --   local copilot_keys = vim.fn['copilot#Accept']()
+    --   if copilot_keys ~= '' and type(copilot_keys) == 'string' then
+    --     vim.api.nvim_feedkeys(copilot_keys, 'i', true)
+    --   else
+    --     fallback()
+    --   end
+    -- ['<S-Tab>'] = cmp.mapping(function(fallback)
+    --   if cmp.visible() then
+    --     cmp.select_prev_item()
+    --   elseif luasnip.jumpable(-1) then
+    --     luasnip.jump(-1)
+    --   else
+    --     fallback()
+    --   end
     ['<S-Tab>'] = cmp.mapping(function(fallback)
-      local copilot_keys = vim.fn['copilot#Accept']()
-      if copilot_keys ~= '' and type(copilot_keys) == 'string' then
-        vim.api.nvim_feedkeys(copilot_keys, 'i', true)
+      local suggestion = require('supermaven-nvim.completion_preview')
+      if suggestion.has_suggestion() then
+        suggestion.on_accept_suggestion()
       else
         fallback()
       end
+      -- if cmp.visible() then
+      --   cmp.select_prev_item()
+      -- elseif luasnip.jumpable(-1) then
+      --   luasnip.jump(-1)
+      -- else
+      --   fallback()
+      -- end
     end, { 'i', 's' }),
   },
   sources = {
@@ -682,7 +731,8 @@ cmp.setup {
     { name = 'nvim_lsp_signature_help' },
     { name = 'luasnip' },
     { name = 'buffer' },
-    { name = 'path' }
+    { name = 'path' },
+    -- { name = 'supermaven' }
   },
 }
 cmp.setup.cmdline(':', {
@@ -712,6 +762,7 @@ end, { desc = ':Q = :q' })
 
 
 vim.api.nvim_set_keymap("v", "<leader>r", "\"hy:%s/<C-r>h//g<left><left>", { noremap = true })
+
 
 
 --

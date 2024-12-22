@@ -49,9 +49,9 @@ for _, language in ipairs({ 'typescript', 'javascript' }) do
             request = "launch",
             name = "simple",
             -- trace = true, -- include debugger info
-            runtimeExecutable = "npm",
+            runtimeExecutable = "yarn",
             runtimeArgs = {
-                "run", "dev"
+                "start:web"
             },
             rootPath = "${workspaceFolder}",
             cwd = "${workspaceFolder}",
