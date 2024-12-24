@@ -36,7 +36,7 @@ require('packer').startup(function(use)
     -- Uncomment next line if you want to follow only stable versions
     -- tag = "*"
   }
-  use { 'akinsho/bufferline.nvim', tag = "v4.*", requires = 'nvim-tree/nvim-web-devicons' }
+  use { 'akinsho/bufferline.nvim', requires = 'nvim-tree/nvim-web-devicons' }
 
   use { -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -413,6 +413,8 @@ require("bufferline").setup {
   options = {
     diagnostics = "nvim_lsp",
     numbers = "ordinal",
+    middle_mouse_command = "bdelete! %d",        -- can be a string | function, | false see "Mouse actions"
+    right_mouse_command = "BufferLineTogglePin", -- can be a string | function | false, see "Mouse actions"
     color_icons = true,
     separator_style = "thin",
     diagnostics_indicator = function()
