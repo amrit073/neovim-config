@@ -10,7 +10,6 @@ end
 require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
-  -- use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
   use { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     requires = {
@@ -20,11 +19,6 @@ require('packer').startup(function(use)
     },
   }
   use "folke/which-key.nvim"
-  -- use { 'anuvyklack/pretty-fold.nvim',
-  --   config = function()
-  --     require('pretty-fold').setup()
-  --   end
-  -- }
   use "linux-cultist/venv-selector.nvim"
   use 'AckslD/swenv.nvim'
   use {
@@ -96,17 +90,31 @@ require('packer').startup(function(use)
   }
   use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
   use 'mfussenegger/nvim-dap-python'
+  -- use {
+  --   "supermaven-inc/supermaven-nvim",
+  --   config = function()
+  --     require("supermaven-nvim").setup({
+  --       keymaps = {
+  --         accept_suggestion = "<Tab>",
+  --       },
+  --       disable_keymaps = false, -- disables built in keymaps for more manual control
+  --     })
+  --   end,
+  -- }
+  --
   use {
-    "supermaven-inc/supermaven-nvim",
-    config = function()
-      require("supermaven-nvim").setup({
-        keymaps = {
-          accept_suggestion = "<Tab>",
-        },
-        disable_keymaps = false, -- disables built in keymaps for more manual control
-      })
-    end,
+    'nvim-flutter/flutter-tools.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim',
+    },
   }
+  use({
+    "olimorris/codecompanion.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    }
+  })
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -235,41 +243,7 @@ require("scrollbar").setup({
 }
 )
 
-require('neoscroll').setup({
-  -- All these keys will be mapped to their corresponding default scrolling animation
-  mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>',
-    '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
-  hide_cursor = true,          -- Hide cursor while scrolling
-  stop_eof = true,             -- Stop at <EOF> when scrolling downwards
-  respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
-  cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-  easing_function = nil,       -- Default easing function
-  pre_hook = nil,              -- Function to run before the scrolling animation starts
-  post_hook = nil,             -- Function to run after the scrolling animation ends
-  performance_mode = false,    -- Disable "Performance Mode" on all buffers.
-})
 
-require('goto-preview').setup {
-  width = 120, -- Width of the floating window
-  height = 15, -- Height of the floating window
-  border = { "↖", "─", "┐", "│", "┘", "─", "└", "│" }, -- Border characters of the floating window
-  default_mappings = false, -- Bind default mappings
-  debug = false, -- Print debug information
-  opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
-  resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
-  post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
-  post_close_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
-  references = { -- Configure the telescope UI for slowing the references cycling window.
-    telescope = require("telescope.themes").get_dropdown({ hide_preview = false })
-  },
-  -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
-  focus_on_open = true,                                        -- Focus the floating window when opening it.
-  dismiss_on_move = false,                                     -- Dismiss the floating window when moving the cursor.
-  force_close = true,                                          -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
-  bufhidden = "wipe",                                          -- the bufhidden option to set on the floating window. See :h bufhidden
-  stack_floating_preview_windows = true,                       -- Whether to nest floating windows
-  preview_window_title = { enable = true, position = "left" }, -- Whether to set the preview window title as the filename
-}
 
 -- Set lualine as statusline
 -- See `:help lualine.txt`
@@ -327,6 +301,11 @@ require('gitsigns').setup {
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
+  pickers = {
+    colorscheme = {
+      enable_preview = true
+    }
+  },
   defaults = {
     borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
     layout_strategy = "horizontal",
@@ -434,8 +413,6 @@ require("bufferline").setup {
     offsets = {
       {
         filetype = 'NvimTree',
-        --	filetype = 'ChadTree'
-
       }
     },
   }
@@ -577,11 +554,11 @@ local on_attach = function(client, bufnr)
   end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
 end
 
+vim.api.nvim_create_user_command('Format', function(_)
+  vim.lsp.buf.format()
+end, { desc = 'Format current buffer with LSP' })
 
 -- vim.cmd [[autocmd! CursorHold * lua vim.diagnostic.open_float(nil, {focus=false})]]
 -- Enable the following language servers
@@ -600,12 +577,6 @@ local servers = {
   --
   -- },
   --
-  pyright = {
-    inlay_hints = true
-  },
-  ruff_lsp = {
-    inlay_hints = true
-  },
 }
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
@@ -638,37 +609,7 @@ end
 local mason_lspconfig = require 'mason-lspconfig'
 
 
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-    }
-  end,
-}
-
-
--- require('mason-tool-installer').setup {
---   ensure_installed = {
---     "clang-format",
---     "clangd",
---     "eslint-lsp ",
---     "eslint_d",
---     "gopls",
---     "lua-language-server ",
---     "prettier",
---     "prettierd",
---     "pylint",
---     "pyright",
---     "ruff-lsp ",
---     "rust-analyzer ",
---     "rustfmt",
---     "sql-formatter",
---     "typescript-language-server ",
---     "black"
---   },
--- }
+mason_lspconfig.setup()
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
@@ -697,13 +638,14 @@ cmp.setup {
         fallback()
       end
     end, { 'i', 's' }),
-    -- ['<S-Tab>'] = cmp.mapping(function(fallback)
-    --   local copilot_keys = vim.fn['copilot#Accept']()
-    --   if copilot_keys ~= '' and type(copilot_keys) == 'string' then
-    --     vim.api.nvim_feedkeys(copilot_keys, 'i', true)
-    --   else
-    --     fallback()
-    --   end
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      local copilot_keys = vim.fn['copilot#Accept']()
+      if copilot_keys ~= '' and type(copilot_keys) == 'string' then
+        vim.api.nvim_feedkeys(copilot_keys, 'i', true)
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
     -- ['<S-Tab>'] = cmp.mapping(function(fallback)
     --   if cmp.visible() then
     --     cmp.select_prev_item()
@@ -712,21 +654,21 @@ cmp.setup {
     --   else
     --     fallback()
     --   end
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      local suggestion = require('supermaven-nvim.completion_preview')
-      if suggestion.has_suggestion() then
-        suggestion.on_accept_suggestion()
-      else
-        fallback()
-      end
-      -- if cmp.visible() then
-      --   cmp.select_prev_item()
-      -- elseif luasnip.jumpable(-1) then
-      --   luasnip.jump(-1)
-      -- else
-      --   fallback()
-      -- end
-    end, { 'i', 's' }),
+    -- ['<S-Tab>'] = cmp.mapping(function(fallback)
+    -- local suggestion = require('supermaven-nvim.completion_preview')
+    -- if suggestion.has_suggestion() then
+    --   suggestion.on_accept_suggestion()
+    -- else
+    --   fallback()
+    -- end
+    --
+    -- does this work as lsp_expand
+    --   if cmp.visible() then
+    --     cmp.select_prev_item()
+    --   else
+    --     fallback()
+    --   end
+    -- end, { 'i', 's' }),
   },
   sources = {
     { name = 'nvim_lsp' },
@@ -734,6 +676,7 @@ cmp.setup {
     { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
+    { name = 'CodeCompanion' },
     -- { name = 'supermaven' }
   },
 }
@@ -766,56 +709,36 @@ end, { desc = ':Q = :q' })
 vim.api.nvim_set_keymap("v", "<leader>r", "\"hy:%s/<C-r>h//g<left><left>", { noremap = true })
 
 
+require("codecompanion").setup({
+  strategies = {
+    chat = {
+      adapter = 'copilot'
+    },
+    inline = {
+      adapter = 'copilot'
+    },
+  },
+})
 
+-- local root_files = { '.git', 'pyproject.toml', 'setup.py', 'setup.cfg', 'Pipfile', 'venv', 'requirements.txt' }
 --
--- require('packer').startup(function(use)
---   use({
---     "mfussenegger/nvim-dap"
---   })
---   use({
---     "rcarriga/nvim-dap-ui",
---     config = function()
---       require("dapui").setup()
---     end
---   })
---   use({
---     "theHamsta/nvim-dap-virtual-text",
---     config = function()
---       require("nvim-dap-virtual-text").setup()
---     end
---   })
---   use({
---     "ravenxrz/DAPInstall.nvim",
---   })
--- end)
---
--- vim.keymap.set("n", "<F4>", ":lua require('dapui').toggle()<CR>")
--- vim.keymap.set("n", "<F5>", ":lua require('dap').toggle_breakpoint()<CR>")
--- vim.keymap.set("n", "<F9>", ":lua require('dap').continue()<CR>")
---
--- vim.keymap.set("n", "<F1>", ":lua require('dap').step_over()<CR>")
--- vim.keymap.set("n", "<F2>", ":lua require('dap').step_into()<CR>")
--- vim.keymap.set("n", "<F3>", ":lua require('dap').step_out()<CR>")
---
--- vim.keymap.set("n", "<Leader>dsc", ":lua require('dap').continue()<CR>")
--- vim.keymap.set("n", "<Leader>dsv", ":lua require('dap').step_over()<CR>")
--- vim.keymap.set("n", "<Leader>dsi", ":lua require('dap').step_into()<CR>")
--- vim.keymap.set("n", "<Leader>dso", ":lua require('dap').step_out()<CR>")
---
--- vim.keymap.set("n", "<Leader>dhh", ":lua require('dap.ui.variables').hover()<CR>")
--- vim.keymap.set("v", "<Leader>dhv", ":lua require('dap.ui.variables').visual_hover()<CR>")
---
--- vim.keymap.set("n", "<Leader>duh", ":lua require('dap.ui.widgets').hover()<CR>")
--- vim.keymap.set("n", "<Leader>duf",
---   ":lua local widgets=require('dap.ui.widgets');widgets.centered_float(widgets.scopes)<CR>")
---
--- vim.keymap.set("n", "<Leader>dro", ":lua require('dap').repl.open()<CR>")
--- vim.keymap.set("n", "<Leader>drl", ":lua require('dap').repl.run_last()<CR>")
---
--- vim.keymap.set("n", "<Leader>dbc", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
--- vim.keymap.set("n", "<Leader>dbm",
---   ":lua require('dap').set_breakpoint( nil, nil, vim.fn.input('Log point message: ') )<CR>")
--- vim.keymap.set("n", "<Leader>dbt", ":lua require('dap').toggle_breakpoint()<CR>")
---
--- vim.keymap.set("n", "<Leader>dc", ":lua require('dap.ui.variables').scopes()<CR>")
--- vim.keymap.set("n", "<Leader>di", ":lua require('dapui').toggle()<CR>")
+-- -- Configure the Ty LSP client
+-- vim.lsp.config['ty'] = {
+--   cmd       = { 'ty', 'server' }, -- command to start Ty
+--   filetypes = { 'python' },       -- only activate for Python files
+--   root_dir  = vim.fs.root(0, root_files),
+--   settings  = {},                 -- (no special settings needed initially)
+-- }
+-- -- Enable (auto-start) the Ty server for Python
+-- vim.lsp.enable('ty')
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "python",
+--   callback = function()
+--     vim.lsp.start({
+--       name = "ty",
+--       cmd = { "ty", "server" },
+--       root_dir = vim.fs.root(0, { ".git", "pyproject.toml", "setup.py", 'requirements.txt' }),
+--       filetypes = { "python" },
+--     })
+--   end,
+-- })

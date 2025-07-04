@@ -121,7 +121,6 @@ Plug 'kyoz/purify', { 'rtp': 'vim' }
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 Plug 'rhysd/conflict-marker.vim'
-" Plug 'WhoIsSethDaniel/mason-tool-installer.nvim'
 call plug#end()
 
 let g:conflict_marker_highlight_group = ''

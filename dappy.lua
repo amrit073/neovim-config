@@ -3,7 +3,7 @@ require('dap-vscode-js').setup({
     adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
 })
 
-require('dap-python').setup('/home/amrit/.virtualenvs/debugpy/bin/python')
+require('dap-python').setup("/usr/bin/python")
 local dap = require('dap')
 
 
