@@ -1,7 +1,7 @@
--- setup adapters
-require('dap-vscode-js').setup({
-    adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
-})
+-- -- setup adapters
+-- require('dap-vscode-js').setup({
+--     adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
+-- })
 
 require('dap-python').setup("/usr/bin/python")
 local dap = require('dap')
@@ -25,62 +25,62 @@ local dap = require('dap')
 --     end
 -- end
 
--- language config
-for _, language in ipairs({ 'typescript', 'javascript' }) do
-    dap.configurations[language] = {
-        {
-            name = 'Launch',
-            type = 'pwa-node',
-            request = 'launch',
-            runtimeArgs = { "--nolazy", "-r", "ts-node/register/transpile-only" },
-            program = '${file}',
-            rootPath = '${workspaceFolder}',
-            cwd = '${workspaceFolder}',
-            sourceMaps = true,
-            skipFiles = { '<node_internals>/**' },
-            protocol = 'inspector',
-            console = 'integratedTerminal',
-            env = {
-                NODE_ENV = 'development'
-            }
-        },
-        {
-            type = "pwa-node",
-            request = "launch",
-            name = "simple",
-            -- trace = true, -- include debugger info
-            runtimeExecutable = "yarn",
-            runtimeArgs = {
-                "start:web"
-            },
-            rootPath = "${workspaceFolder}",
-            cwd = "${workspaceFolder}",
-            console = "integratedTerminal",
-            internalConsoleOptions = "neverOpen",
-            env = {
-                NODE_ENV = 'development'
-            }
-        },
-        {
-            type = "pwa-node",
-            request = "launch",
-            name = "Debug Mocha Tests",
-            -- trace = true, -- include debugger info
-            runtimeExecutable = "npm",
-            runtimeArgs = {
-                "run", "test"
-            },
-            rootPath = "${workspaceFolder}",
-            cwd = "${workspaceFolder}",
-            console = "integratedTerminal",
-            internalConsoleOptions = "neverOpen",
-            env = {
-                NODE_ENV = 'development'
-            }
-        }
-    }
-end
-
+-- -- language config
+-- for _, language in ipairs({ 'typescript', 'javascript' }) do
+--     dap.configurations[language] = {
+--         {
+--             name = 'Launch',
+--             type = 'pwa-node',
+--             request = 'launch',
+--             runtimeArgs = { "--nolazy", "-r", "ts-node/register/transpile-only" },
+--             program = '${file}',
+--             rootPath = '${workspaceFolder}',
+--             cwd = '${workspaceFolder}',
+--             sourceMaps = true,
+--             skipFiles = { '<node_internals>/**' },
+--             protocol = 'inspector',
+--             console = 'integratedTerminal',
+--             env = {
+--                 NODE_ENV = 'development'
+--             }
+--         },
+--         {
+--             type = "pwa-node",
+--             request = "launch",
+--             name = "simple",
+--             -- trace = true, -- include debugger info
+--             runtimeExecutable = "yarn",
+--             runtimeArgs = {
+--                 "start:web"
+--             },
+--             rootPath = "${workspaceFolder}",
+--             cwd = "${workspaceFolder}",
+--             console = "integratedTerminal",
+--             internalConsoleOptions = "neverOpen",
+--             env = {
+--                 NODE_ENV = 'development'
+--             }
+--         },
+--         {
+--             type = "pwa-node",
+--             request = "launch",
+--             name = "Debug Mocha Tests",
+--             -- trace = true, -- include debugger info
+--             runtimeExecutable = "npm",
+--             runtimeArgs = {
+--                 "run", "test"
+--             },
+--             rootPath = "${workspaceFolder}",
+--             cwd = "${workspaceFolder}",
+--             console = "integratedTerminal",
+--             internalConsoleOptions = "neverOpen",
+--             env = {
+--                 NODE_ENV = 'development'
+--             }
+--         }
+--     }
+-- end
+--
 
 local dapui = require('dapui')
 

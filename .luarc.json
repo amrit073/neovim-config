@@ -1,0 +1,36 @@
+{
+    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "Lua.diagnostics.globals": [
+        "vim"
+    ],
+    "Lua.workspace.library": [
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/neodev.nvim/types/stable",
+        "/usr/share/nvim/runtime",
+        "/home/amrit/.local/share/nvim/site/pack/packer/opt/nvim-treesitter-textobjects",
+        "/home/amrit/.local/share/nvim/site/pack/packer/opt/telescope-fzf-native.nvim",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/Comment.nvim",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/LuaSnip",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/fidget.nvim",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/mason.nvim",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/neodev.nvim",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/nvim-cmp",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/onedark.nvim",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/packer.nvim",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/plenary.nvim",
+        "/home/amrit/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+        "/usr/share/nvim/site/pack/packer/start/packer.nvim",
+        "${3rd}/luassert/library",
+        "${3rd}/luv/library"
+    ],
+    "diagnostics.disable": [
+        "missing-fields"
+    ]
+}
